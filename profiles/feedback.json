@@ -1,0 +1,38 @@
+{
+    "name": "feedback",
+    "rules": {
+        "Maya": [
+            ".ma",
+            ".mb"
+        ],
+        "Models": [
+            ".fbx",
+            ".obj"
+        ],
+        "Textures": [
+            ".png",
+            ".jpg",
+            ".tiff"
+        ],
+        "Renders": [
+            ".exr",
+            ".tga"
+        ],
+        "Substance": [
+            ".sbsar",
+            ".spp"
+        ],
+        "Zbrush Scenes": [
+            ".zpr",
+            ".ztl"
+        ]
+    },
+    "notes": "nothing",
+    "subjects": {
+        "ali": {
+            "pass001": "D:\\testing\\ali\\pass\\pass001",
+            "pass002": "D:\\testing\\ali\\pass\\pass002"
+        }
+    },
+    "allow_subsubjects": true
+}

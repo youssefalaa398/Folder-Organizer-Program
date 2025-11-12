@@ -1,5 +1,5 @@
 {
-    "name": "3d Pipelin",
+    "name": "3d pipeline",
     "rules": {
         "Maya": [
             ".ma",
@@ -27,8 +27,9 @@
             ".ztl"
         ]
     },
-    "notes": "",
+    "notes": "nothing",
     "subjects": {
-        "auditiontestststts": "D:\\testing"
-    }
+        "audition nightmare": "D:\\testing\\audition nightmare"
+    },
+    "allow_subsubjects": false
 }
