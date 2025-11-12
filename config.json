@@ -1,0 +1,11 @@
+{
+    "Maya Scenes": [".ma", ".mb"],
+    "Models": [".fbx", ".obj", ".stl"],
+    "Textures": [".png", ".jpg", ".tiff", ".jpeg"],
+    "Renders": [".exr", ".tga"],
+    "Substance Files": [".sbsar", ".spp"],
+    "Zbrush Scenes": [".zpr", ".ztl"],
+    "Feedback Videos": [".mp4", ".mov", ".avi"],
+    "Documents": [".pdf", ".txt", ".docx"],
+    "Others": []
+}

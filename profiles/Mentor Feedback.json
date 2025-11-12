@@ -1,0 +1,14 @@
+{
+    "name": "Mentor Feedback",
+    "rules": {
+        "zbrush": [
+            ".zpr",
+            ".ztl"
+        ],
+        "Video": [
+            ".mp4",
+            ".avi"
+        ]
+    },
+    "notes": "For feedback purposes"
+}
