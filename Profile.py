@@ -3,7 +3,7 @@ from pathlib import Path
 from Subject import Subject
 # -------------------- PROFILE CLASS --------------------
 class Profile:
-    def __init__(self, name, rules=None, notes=""):
+    def __init__(self, name, rules=None, notes="", subjects=None):
         self.name = name
         self.rules = rules or {
             "Maya": [".ma", ".mb"],
@@ -14,6 +14,8 @@ class Profile:
             "Zbrush Scenes": [".zpr", ".ztl"]
         }
         self.notes = notes
+        # subjects stored as { "subject_name": "destination_root_path" }
+        self.subjects = subjects or {}
 
     def save(self, folder="profiles"):
         # Get the folder where Profile.py resides
@@ -26,7 +28,8 @@ class Profile:
         data = {
             "name": self.name,
             "rules": self.rules,
-            "notes": self.notes
+            "notes": self.notes,
+            "subjects": self.subjects
         }
 
         print(f"📝 Saving profile to: {profile_path}")  # debug
@@ -50,7 +53,8 @@ class Profile:
         return cls(
             name=data.get("name"),
             rules=data.get("rules"),
-            notes=data.get("notes", "")
+            notes=data.get("notes", ""),
+            subjects=data.get("subjects", {})
         )
 
 
@@ -131,4 +135,20 @@ class Profile:
         except Exception as e:
             print(f"Failed to delete profile '{name}': {e}")
             return False
+
+    # ---------------- subject helpers ----------------
+    def add_subject(self, subject_name, destination_root):
+        """Register a subject under this profile (destination_root can be any path)."""
+        self.subjects[subject_name] = str(destination_root)
+        self.save()
+
+    def remove_subject(self, subject_name):
+        """Remove a subject record from the profile (does not delete filesystem)."""
+        if subject_name in self.subjects:
+            del self.subjects[subject_name]
+            self.save()
+
+    def list_subjects(self):
+        """Return the stored subjects dict (name -> destination_root)."""
+        return dict(self.subjects)
 

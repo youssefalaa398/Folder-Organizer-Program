@@ -1,0 +1,34 @@
+{
+    "name": "3d Pipelin",
+    "rules": {
+        "Maya": [
+            ".ma",
+            ".mb"
+        ],
+        "Models": [
+            ".fbx",
+            ".obj"
+        ],
+        "Textures": [
+            ".png",
+            ".jpg",
+            ".tiff"
+        ],
+        "Renders": [
+            ".exr",
+            ".tga"
+        ],
+        "Substance": [
+            ".sbsar",
+            ".spp"
+        ],
+        "Zbrush Scenes": [
+            ".zpr",
+            ".ztl"
+        ]
+    },
+    "notes": "",
+    "subjects": {
+        "auditiontestststts": "D:\\testing"
+    }
+}
