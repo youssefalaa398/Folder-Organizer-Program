@@ -137,13 +137,11 @@ def main():
         dest_entry = organizer.profile.subjects[subject_name]
 
         if organizer.profile.allow_subsubjects and isinstance(dest_entry, dict):
-            # automatically create a new incremented pass and use it
+            # sample_pass_path points to: <destination_root>/<subject_name>/<passNNN>
             sample_pass_path = list(dest_entry.values())[0]
             sample_pass_path = Path(sample_pass_path)
-            # derive destination_root from sample pass path:
-            # sample_pass_path = <destination_root>/<subject_name>/pass/<passNNN>
-            # destination_root is parents[2] (safe fallback to parent chain)
-            destination_root = sample_pass_path.parents[2] if len(sample_pass_path.parents) >= 3 else sample_pass_path.parent
+            # destination_root is parents[1] for this layout (fallback to parent)
+            destination_root = sample_pass_path.parents[1] if len(sample_pass_path.parents) >= 2 else sample_pass_path.parent
             subject = organizer.create_subject(subject_name, destination_root, pass_name=None)
         else:
             # reuse the stored destination root for subjects without passes

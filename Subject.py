@@ -18,7 +18,7 @@ class Subject:
         self.destination_path = self.destination_root / self.name
         if pass_name and profile.allow_subsubjects:
             # put all passes under a folder named "pass"
-            self.destination_path = self.destination_path / "pass" / pass_name
+            self.destination_path = self.destination_path  / pass_name
         self.folders = list(profile.rules.keys())
         self.notes = profile.notes
         self.created_at = datetime.now().isoformat()
