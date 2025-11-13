@@ -1,41 +1,11 @@
 {
     "name": "coding",
     "rules": {
-        "Maya": [
-            ".ma",
-            ".mb"
-        ],
-        "Models": [
-            ".fbx",
-            ".obj"
-        ],
-        "Textures": [
-            ".png",
-            ".jpg",
-            ".tiff"
-        ],
-        "Renders": [
-            ".exr",
-            ".tga"
-        ],
-        "Substance": [
-            ".sbsar",
-            ".spp"
-        ],
-        "Zbrush": [
-            ".zpr",
-            ".ztl"
-        ],
-        "Videos": [
-            ".mp4",
-            ".mov"
+        "python": [
+            "..py"
         ]
     },
     "notes": "",
-    "subjects": {
-        "coding of aliiiiii": {
-            "pass001": "D:\\testing\\coding of aliiiiii\\pass001"
-        }
-    },
-    "allow_subsubjects": true
+    "subjects": {},
+    "allow_subsubjects": false
 }

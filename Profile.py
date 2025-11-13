@@ -1,18 +1,21 @@
 from pathlib import Path
 import json
 
-# -------------------- PROFILE CLASS --------------------
 class Profile:
+    # canonical default rules on the class so other modules can reuse them
+    DEFAULT_RULES = {
+        "Maya": [".ma", ".mb"],
+        "Models": [".fbx", ".obj"],
+        "Textures": [".png", ".jpg", ".tiff"],
+        "Renders": [".exr", ".tga"],
+        "Substance": [".sbsar", ".spp"],
+        "Zbrush Scenes": [".zpr", ".ztl"]
+    }
+
     def __init__(self, name, rules=None, notes="", subjects=None, allow_subsubjects=False):
         self.name = name
-        self.rules = rules or {
-            "Maya": [".ma", ".mb"],
-            "Models": [".fbx", ".obj"],
-            "Textures": [".png", ".jpg", ".tiff"],
-            "Renders": [".exr", ".tga"],
-            "Substance": [".sbsar", ".spp"],
-            "Zbrush Scenes": [".zpr", ".ztl"]
-        }
+        # use provided rules or the class default
+        self.rules = rules or Profile.DEFAULT_RULES
         self.notes = notes
         # subjects: { subject_name: destination_path OR { pass_name: pass_path, ... } }
         self.subjects = subjects or {}

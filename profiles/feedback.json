@@ -31,8 +31,7 @@
     "subjects": {
         "ali": {
             "pass001": "D:\\testing\\ali\\pass001",
-            "pass002": "D:\\testing\\ali\\pass002",
-            "pass003": "D:\\testing\\ali\\pass003"
+            "pass002": "D:\\testing\\ali\\pass002"
         }
     },
     "allow_subsubjects": true

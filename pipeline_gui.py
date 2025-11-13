@@ -15,17 +15,6 @@ from Subject import Subject
 from PipelineOrganizer import PipelineOrganizer
 
 
-DEFAULT_RULES = {
-    "Maya": [".ma", ".mb"],
-    "Models": [".fbx", ".obj"],
-    "Textures": [".png", ".jpg", ".tiff"],
-    "Renders": [".exr", ".tga"],
-    "Substance": [".sbsar", ".spp"],
-    "Zbrush": [".zpr", ".ztl"],
-    "Videos": [".mp4", ".mov"]
-}
-
-
 # -------------------- CREATE PROFILE DIALOG --------------------
 class CreateProfileDialog(QtWidgets.QDialog):
     def __init__(self, parent=None):
@@ -62,7 +51,7 @@ class CreateProfileDialog(QtWidgets.QDialog):
         self.default_rules_view = QTextEdit()
         self.default_rules_view.setReadOnly(True)
         self.default_rules_view.setFixedHeight(140)
-        self.default_rules_view.setPlainText(self._format_rules(DEFAULT_RULES))
+        self.default_rules_view.setPlainText(self._format_rules(Profile.DEFAULT_RULES))
         layout.addWidget(QLabel("Default rules (read-only):"))
         layout.addWidget(self.default_rules_view)
 
@@ -136,7 +125,7 @@ class CreateProfileDialog(QtWidgets.QDialog):
         allow_subs = self.allow_subs.isChecked()
 
         if self.use_default_yes.isChecked():
-            rules = DEFAULT_RULES
+            rules = Profile.DEFAULT_RULES
         else:
             rules = {}
             for i in range(self.custom_rules_list.count()):
@@ -245,9 +234,7 @@ class PipelineGUI(QMainWindow):
         actions = QHBoxLayout()
         layout.addLayout(actions)
         self.start_btn = QPushButton("Start Organizing")
-        self.open_dest_btn = QPushButton("Open Destination Folder")
         actions.addWidget(self.start_btn)
-        actions.addWidget(self.open_dest_btn)
 
         # --- Log ---
         self.log = QTextEdit()
@@ -268,7 +255,6 @@ class PipelineGUI(QMainWindow):
         self.src_browse.clicked.connect(self.browse_source)
         self.dst_browse.clicked.connect(self.browse_destination)
         self.start_btn.clicked.connect(self.start_organize)
-        self.open_dest_btn.clicked.connect(self.open_destination)
         self.summary_btn.clicked.connect(self.show_summary)
         self.profile_combo.currentTextChanged.connect(self.on_profile_selected)
 
@@ -416,11 +402,6 @@ class PipelineGUI(QMainWindow):
         except Exception as e:
             self.log_msg(traceback.format_exc())
             QMessageBox.critical(self, "Error", str(e))
-
-    def open_destination(self):
-        folder = Path(self.dst_input.text().strip())
-        if folder.exists():
-            QtCore.QDesktopServices.openUrl(QtCore.QUrl.fromLocalFile(str(folder)))
 
     def show_summary(self):
         try:
