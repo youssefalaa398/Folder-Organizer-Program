@@ -1,11 +1,19 @@
 {
     "name": "coding",
     "rules": {
+        "java": [
+            "..java"
+        ],
         "python": [
             "..py"
         ]
     },
-    "notes": "",
-    "subjects": {},
-    "allow_subsubjects": false
+    "notes": "this is the best coding profile ever made loll",
+    "subjects": {
+        "best project ever": {
+            "pass001": "D:\\testing\\best project ever\\pass001",
+            "pass002": "D:\\testing\\best project ever\\pass002"
+        }
+    },
+    "allow_subsubjects": true
 }
