@@ -1,0 +1,16 @@
+{
+    "name": "sculpting",
+    "rules": {
+        "zbrush files": [
+            "..zpr",
+            "..ztl"
+        ],
+        "3d models": [
+            "..obj",
+            "..fbx"
+        ]
+    },
+    "notes": "this pipeline for sculpting",
+    "subjects": {},
+    "allow_subsubjects": true
+}
