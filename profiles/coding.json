@@ -22,12 +22,20 @@
             ".sbsar",
             ".spp"
         ],
-        "Zbrush Scenes": [
+        "Zbrush": [
             ".zpr",
             ".ztl"
+        ],
+        "Videos": [
+            ".mp4",
+            ".mov"
         ]
     },
     "notes": "",
-    "subjects": {},
-    "allow_subsubjects": false
+    "subjects": {
+        "coding of aliiiiii": {
+            "pass001": "D:\\testing\\coding of aliiiiii\\pass001"
+        }
+    },
+    "allow_subsubjects": true
 }

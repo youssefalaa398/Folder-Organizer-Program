@@ -97,10 +97,7 @@ class Profile:
 
     # ------------------ SUBJECT MANAGEMENT ------------------
     def add_subject(self, subject_name, destination_path, pass_name=None):
-        """Register a subject under this profile.
-        destination_path should be the full path to the subject (or pass) folder.
-        If allow_subsubjects is True, stored value is a dict of passes.
-        """
+      
         dest_str = str(destination_path)
         if self.allow_subsubjects:
             entry = self.subjects.get(subject_name)
