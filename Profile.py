@@ -2,7 +2,6 @@ from pathlib import Path
 import json
 
 class Profile:
-    # canonical default rules on the class so other modules can reuse them
     DEFAULT_RULES = {
         "Maya": [".ma", ".mb"],
         "Models": [".fbx", ".obj"],
@@ -14,11 +13,11 @@ class Profile:
 
     def __init__(self, name, rules=None, notes="", subjects=None, allow_subsubjects=False):
         self.name = name
-        # use provided rules or the class default
-        self.rules = rules or Profile.DEFAULT_RULES
+        # copy rules to avoid shared mutable default between instances
+        self.rules = dict(rules) if rules is not None else dict(Profile.DEFAULT_RULES)
         self.notes = notes
-        # subjects: { subject_name: destination_path OR { pass_name: pass_path, ... } }
-        self.subjects = subjects or {}
+        # store a dict copy if provided
+        self.subjects = dict(subjects) if subjects is not None else {}
         self.allow_subsubjects = allow_subsubjects
 
     # ------------------ SAVE / LOAD ------------------
@@ -66,7 +65,7 @@ class Profile:
         return [p.stem for p in folder_path.glob("*.json")]
 
     @staticmethod
-    def create_profile_interactively():
+    def create_profile_interactively(): #used in the main function only NOT used in the GUI
         # minimal interactive creation to avoid breaking callers
         name = input("Enter profile name: ").strip()
         use_default = input("Use default rules? (y/n): ").strip().lower() == "y"
@@ -100,15 +99,13 @@ class Profile:
 
     # ------------------ SUBJECT MANAGEMENT ------------------
     def add_subject(self, subject_name, destination_path, pass_name=None):
-      
-        dest_str = str(destination_path)
+        # normalize and store absolute path
+        dest_str = str(Path(destination_path).resolve())
         if self.allow_subsubjects:
             entry = self.subjects.get(subject_name)
             if not isinstance(entry, dict):
                 entry = {}
             if not pass_name:
-                # if no pass name provided, try to derive one (caller should normally provide)
-                # fallback: use pass001 if none present
                 pass_name = "pass001"
                 if entry:
                     nums = [int(k[4:]) for k in entry.keys() if k.lower().startswith("pass") and k[4:].isdigit()]

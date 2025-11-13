@@ -33,7 +33,7 @@ class CreateProfileDialog(QtWidgets.QDialog):
         self.notes_input.setFixedHeight(80)
         layout.addWidget(self.notes_input)
 
-        self.allow_subs = QCheckBox("Allow sub-subjects / passes")
+        self.allow_subs = QCheckBox("Allow sub-subjects (passes)")
         layout.addWidget(self.allow_subs)
 
         # --- Radio buttons ---
@@ -47,7 +47,7 @@ class CreateProfileDialog(QtWidgets.QDialog):
         radio_row.addStretch()
         layout.addLayout(radio_row)
 
-        # --- Default Rules (readonly) ---
+        # --- Default Rules ---
         self.default_rules_view = QTextEdit()
         self.default_rules_view.setReadOnly(True)
         self.default_rules_view.setFixedHeight(140)
@@ -97,7 +97,6 @@ class CreateProfileDialog(QtWidgets.QDialog):
         return "\n".join(f"{k}: {', '.join(v)}" for k, v in rules.items())
 
     def _toggle_custom_form(self, checked):
-        """Show custom rule form if not using default."""
         self.custom_rules_widget.setVisible(not checked)
         self.default_rules_view.setVisible(checked)
 
@@ -140,7 +139,6 @@ class CreateProfileDialog(QtWidgets.QDialog):
                 QMessageBox.warning(self, "No rules", "Add at least one custom rule.")
                 return
 
-        # --- Save profile ---
         prof = Profile(name, rules=rules, notes=notes, subjects={}, allow_subsubjects=allow_subs)
         prof.save()
         self.created_profile = prof
@@ -175,7 +173,7 @@ class PipelineGUI(QMainWindow):
         # --- Notes ---
         self.profile_notes = QTextEdit()
         self.profile_notes.setReadOnly(True)
-        self.profile_notes.setFixedHeight(60)
+        self.profile_notes.setFixedHeight(20)
         layout.addWidget(QLabel("Profile Notes:"))
         layout.addWidget(self.profile_notes)
 
@@ -330,24 +328,41 @@ class PipelineGUI(QMainWindow):
             self.log_msg(f"Profile '{name}' deleted.")
 
     def delete_subject(self):
-        """Delete the selected subject (or pass)."""
+        """Delete the selected subject (or pass) from disk and from the profile."""
         selected = self.subjects_list.selectedItems()
         if not selected:
             QMessageBox.warning(self, "No selection", "Please select a subject to delete.")
             return
-        
+
         item = selected[0]
         subj_name, pass_name = item.data(QtCore.Qt.UserRole)
-        
+
         item_text = item.text()
         reply = QMessageBox.question(
             self, "Confirm Delete",
-            f"Delete '{item_text}'?",
+            f"Delete '{item_text}'? This will remove the folder from disk.",
             QMessageBox.Yes | QMessageBox.No
         )
-        
+
         if reply == QMessageBox.Yes:
             try:
+                # Determine destination_root based on stored path format
+                subjects_map = self.current_profile.subjects
+                if self.current_profile.allow_subsubjects and isinstance(subjects_map.get(subj_name), dict) and pass_name:
+                    # stored pass path is the full pass folder: <destination_root>/<subject>/<passNNN>
+                    pass_path = Path(subjects_map[subj_name].get(pass_name))
+                    destination_root = pass_path.parents[1] if len(pass_path.parents) >= 2 else pass_path.parent
+                else:
+                    # stored entry is full subject folder: <destination_root>/<subject>
+                    entry = subjects_map.get(subj_name)
+                    subj_path = Path(entry)
+                    destination_root = subj_path.parent
+
+                # Use Subject.delete() to remove folder from disk
+                subject = Subject(subj_name, str(destination_root), self.current_profile, pass_name)
+                subject.delete()
+
+                # Remove metadata from profile
                 self.current_profile.remove_subject(subj_name, pass_name)
                 self.refresh_subjects_list()
                 self.log_msg(f"Subject '{item_text}' deleted.")

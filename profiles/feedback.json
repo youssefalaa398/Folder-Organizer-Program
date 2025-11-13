@@ -30,8 +30,7 @@
     "notes": "nothing",
     "subjects": {
         "ali": {
-            "pass001": "D:\\testing\\ali\\pass001",
-            "pass002": "D:\\testing\\ali\\pass002"
+            "pass001": "D:\\testing\\ali\\pass001"
         }
     },
     "allow_subsubjects": true

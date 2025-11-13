@@ -53,7 +53,7 @@ class PipelineOrganizer:
     def organize_to_subject(self, source_folder, subject, copy_function=shutil.copy2):
         source = Path(source_folder)
         if not source.exists():
-            print(f"⚠️ Source folder '{source}' does not exist.")
+            print(f"Source folder '{source}' does not exist.")
             return False
         if not isinstance(subject, Subject):
             raise TypeError("subject must be a Subject instance")
@@ -72,11 +72,11 @@ class PipelineOrganizer:
                 except Exception as e:
                     print(f"Failed to copy '{item}': {e}")
 
-        print(f"✅ Copied {copied} files into subject '{subject.name}' at '{subject.destination_path}'")
+        print(f"Copied {copied} files into subject '{subject.name}' at '{subject.destination_path}'")
         return True
 
     def summarize_subject(self, subject):
-        print(f"\n📦 Summary for subject '{subject.name}':")
+        print(f"\nSummary for subject '{subject.name}':")
         if not subject.destination_path.exists():
             print("No files or folders found for this subject.")
             return
@@ -131,7 +131,7 @@ def main():
     if use_existing == "y":
         subject_name = input("Enter existing subject name: ").strip()
         if subject_name not in organizer.profile.subjects:
-            print(f"⚠️ Subject '{subject_name}' not registered under profile '{organizer.profile.name}'.")
+            print(f"Subject '{subject_name}' not registered under profile '{organizer.profile.name}'.")
             return
 
         dest_entry = organizer.profile.subjects[subject_name]
